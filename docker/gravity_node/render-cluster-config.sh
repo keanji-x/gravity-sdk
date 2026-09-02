@@ -4,6 +4,11 @@
 # come from cluster.toml.example defaults.
 set -euo pipefail
 
+# These disposable devnet configs are bind-mounted into a container running as
+# uid 10001. Keep their existing documented world-readable behavior even when
+# the caller has a restrictive umask; never use this renderer for mainnet keys.
+umask 022
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 CLUSTER_OUT="$REPO_ROOT/cluster/output"
